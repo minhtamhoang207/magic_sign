@@ -14,8 +14,9 @@ dependencies:
   gap: any
   flutter_svg: any
   simple_animations: any
-
-
+  modal_bottom_sheet: any
+  curved_navigation_bar: any
+  carousel_slider: any
   flutter: 
     sdk: flutter
 

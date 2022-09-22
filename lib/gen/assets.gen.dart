@@ -28,6 +28,21 @@ class $AssetsSvgGen {
   /// File path: assets/svg/huawei_logo.svg
   String get huaweiLogo => 'assets/svg/huawei_logo.svg';
 
+  /// File path: assets/svg/ic_camera.svg
+  String get icCamera => 'assets/svg/ic_camera.svg';
+
+  /// File path: assets/svg/ic_compass.svg
+  String get icCompass => 'assets/svg/ic_compass.svg';
+
+  /// File path: assets/svg/ic_home.svg
+  String get icHome => 'assets/svg/ic_home.svg';
+
+  /// File path: assets/svg/ic_news.svg
+  String get icNews => 'assets/svg/ic_news.svg';
+
+  /// File path: assets/svg/ic_person.svg
+  String get icPerson => 'assets/svg/ic_person.svg';
+
   /// File path: assets/svg/intro_1.svg
   String get intro1 => 'assets/svg/intro_1.svg';
 

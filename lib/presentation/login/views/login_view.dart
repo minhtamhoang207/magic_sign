@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:magic_sign/gen/assets.gen.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 import 'package:get/get.dart';
 
+import '../../../core/routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -65,7 +67,6 @@ class _LoginScreenState extends State<LoginScreen>
                   tween: Tween(begin: -100.0, end: 0),
                   builder: (context, child, value) {
                     return Transform.translate(
-                      // animation that moves childs from left to right
                       offset: Offset(value, 0),
                       child: child,
                     );
@@ -127,46 +128,49 @@ class _LoginScreenState extends State<LoginScreen>
                 IntrinsicWidth(
                   child: Column(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 20),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: const LinearGradient(colors: [
-                              Color(0xFF4E65FF),
-                              Color(0xFF5BBBE1),
-                            ])),
-                        child: const Center(
-                          child: Text("LOGIN",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16)),
+                      InkWell(
+                        onTap: ()=> Get.toNamed(Routes.DASH_BOARD),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: const LinearGradient(colors: [
+                                Color(0xFF4E65FF),
+                                Color(0xFF5BBBE1),
+                              ])),
+                          child: const Center(
+                            child: Text("LOGIN",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16)),
+                          ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 60),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 1,
-                              color: Colors.black,
-                            ),
-                            const Gap(5),
-                            const Text("OR",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16)),
-                            const Gap(5),
-                            Container(
-                              width: 30,
-                              height: 1,
-                              color: Colors.black,
-                            ),
-                          ],
-                        )
-                      ),
+                          padding: const EdgeInsets.symmetric(vertical: 60),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 30,
+                                height: 1,
+                                color: Colors.black,
+                              ),
+                              const Gap(5),
+                              const Text("OR",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                              const Gap(5),
+                              Container(
+                                width: 30,
+                                height: 1,
+                                color: Colors.black,
+                              ),
+                            ],
+                          )),
                       Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 20),
@@ -189,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen>
                     ],
                   ),
                 ),
-                const Gap(120),
+                const Gap(50),
                 Text.rich(
                   TextSpan(
                     children: [
@@ -201,7 +205,10 @@ class _LoginScreenState extends State<LoginScreen>
                               color: Color.fromRGBO(143, 148, 251, 1))),
                       TextSpan(
                         text: 'Sign up',
-                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = (){
+                            Get.toNamed(Routes.SIGN_UP);
+                          },
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/home_controller.dart';
+import '../controllers/detect_sign_controller.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class DetectSignView extends GetView<DetectSignController> {
+  const DetectSignView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Text(
-          'Are u ok?',
+          'DetectSignView is working',
           style: TextStyle(fontSize: 20),
         ),
       ),

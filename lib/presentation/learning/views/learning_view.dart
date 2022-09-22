@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/home_controller.dart';
+import '../controllers/learning_controller.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class LearningView extends GetView<LearningController> {
+  const LearningView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Text(
-          'Are u ok?',
+          'LearningView is working',
           style: TextStyle(fontSize: 20),
         ),
       ),
