@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "40.0.0"
+  agconnect_auth:
+    dependency: "direct main"
+    description:
+      name: agconnect_auth
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.0+300"
   analyzer:
     dependency: transitive
     description:
@@ -305,6 +312,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  huawei_account:
+    dependency: "direct main"
+    description:
+      name: huawei_account
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.4.0+301"
   intl:
     dependency: "direct main"
     description:

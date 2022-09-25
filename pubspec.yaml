@@ -17,6 +17,9 @@ dependencies:
   modal_bottom_sheet: any
   curved_navigation_bar: any
   carousel_slider: any
+  huawei_account: any
+  agconnect_auth: 1.5.0+300
+
   flutter: 
     sdk: flutter
 

@@ -171,23 +171,26 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ],
                           )),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 20),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: const Color(0xFFCE0E2D)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(Assets.svg.huaweiLogo, width: 35),
-                            const Gap(8),
-                            const Text("Sign in with HUAWEI ID",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16))
-                          ],
+                      InkWell(
+                        onTap: () async => Get.find<LoginController>().huaweiLogin(),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: const Color(0xFFCE0E2D)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SvgPicture.asset(Assets.svg.huaweiLogo, width: 35),
+                              const Gap(8),
+                              const Text("Sign in with HUAWEI ID",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16))
+                            ],
+                          ),
                         ),
                       ),
                     ],
