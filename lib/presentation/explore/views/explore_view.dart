@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
 import 'package:get/get.dart';
-
+import 'package:magic_sign/core/routes/app_pages.dart';
 import '../controllers/explore_controller.dart';
 
 class ExploreView extends GetView<ExploreController> {
@@ -22,17 +21,21 @@ class ExploreView extends GetView<ExploreController> {
           ),
         ),
         const Gap(20),
-        SizedBox(
-          height: 300,
-          width: Get.width,
-          child: ListView.builder(
-            itemCount: 20,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return _lastestNewsItem();
-            },
-          ),
-        ),
+        CarouselSlider.builder(
+            itemCount: 15,
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) =>
+                    _lastestNewsItem(itemIndex, pageViewIndex),
+            options: CarouselOptions(
+              aspectRatio: 4 / 2.6,
+              initialPage: 0,
+              enlargeStrategy: CenterPageEnlargeStrategy.height,
+              enlargeCenterPage: true,
+              padEnds: false,
+              autoPlayCurve: Curves.decelerate,
+              viewportFraction: 0.9,
+              scrollDirection: Axis.horizontal,
+            )),
         const Gap(30),
         SizedBox(
           height: 40,
@@ -41,73 +44,174 @@ class ExploreView extends GetView<ExploreController> {
             itemCount: 20,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return _topic();
+              return _topic(index);
             },
           ),
         ),
-        // SizedBox(
-        //   child: CarouselSlider.builder(
-        //       itemCount: 15,
-        //       itemBuilder:
-        //           (BuildContext context, int itemIndex, int pageViewIndex) =>
-        //               _lastestNewsItem(),
-        //       options: CarouselOptions(
-        //         aspectRatio: 16/9,
-        //         initialPage: 0,
-        //         enableInfiniteScroll: true,
-        //         reverse: false,
-        //         autoPlay: true,
-        //         viewportFraction:1 ,
-        //         enlargeStrategy: CenterPageEnlargeStrategy.height,
-        //         autoPlayInterval: Duration(seconds: 3),
-        //         autoPlayAnimationDuration: Duration(milliseconds: 800),
-        //         autoPlayCurve: Curves.fastOutSlowIn,
-        //         enlargeCenterPage: true,
-        //         scrollDirection: Axis.horizontal,
-        //       )),
-        // )
-         const Gap(30),
+        const Gap(30),
         Column(
-          children: List.generate(100, (index) => Container(
-            margin: EdgeInsets.only(bottom: 15, right: 20),
-            width: Get.width,
-            height: Get.width / 2,
-            child: _lastestNewsItem(),
-          )),
+          children: List.generate(
+              100,
+              (index) => SizedBox(
+                    width: Get.width,
+                    height: Get.width / 2,
+                    child: _topicItem(index),
+                  )),
         )
       ],
     ));
   }
 }
 
-Widget _lastestNewsItem() {
-  return Container(
-    width: Get.width - 60,
-    margin: const EdgeInsets.only(left: 20),
-    decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(18),
-        image: const DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-                'https://scontent.fhan14-2.fna.fbcdn.net/v/t1.15752-9/308137407_634585774731587_216712646799226020_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=ae9488&_nc_ohc=O0ZyuDqlHdEAX-Lw47f&tn=9RL8byVkHP78sUrO&_nc_ht=scontent.fhan14-2.fna&oh=03_AVL3IwI2oQKzvDEkOkgQJNALzWTHuJZCWlPOk-0bEFjpJA&oe=6353C31D'))),
+Widget _lastestNewsItem(int itemIndex, int pageIndex) {
+  return Stack(
+    children: [
+      GestureDetector(
+        onTap: (){
+          Get.toNamed(Routes.LEARNING, arguments: 'fhero$itemIndex');
+        },
+        child: Container(
+          margin: const EdgeInsets.only(left: 15),
+          decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(10),
+              image: const DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                      'https://i.ytimg.com/vi/317jz-PU7Mg/maxresdefault.jpg'))),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Gap(20),
+            Text('by Tomoe Cruise',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12)),
+            Gap(5),
+            Text(
+                'Crypto investors should be prepared to lose all their money, BOE governor says by Tomoe Cruise by Tomoe Cruiseby Tomoe Cruise by Tomoe Cruise ',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18)),
+            Spacer(),
+            Text(
+                '“I’m going to say this very bluntly again,” he added. “Buy them only if you’re prepared to lose all your money.”',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 11))
+          ],
+        ),
+      )
+    ],
   );
 }
 
-Widget _topic() {
+Widget _topic(int index) {
   return Padding(
-    padding: const EdgeInsets.only(left: 20),
+    padding: const EdgeInsets.only(left: 15),
     child: Container(
-      margin: EdgeInsets.only(right: 10),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30), color: Color(0xFFFF3A44)),
+          border: Border.all(color: Colors.grey.withOpacity(0.2), width: 2),
+          borderRadius: BorderRadius.circular(30),
+          color: index == 0 ? const Color(0xFFFF3A44) : Colors.white),
       child: Center(
         child: Text(
           'Technology',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: index == 0 ? Colors.white : Colors.black,
+              fontWeight: FontWeight.w600),
         ),
       ),
+    ),
+  );
+}
+
+Widget _topicItem(int index) {
+  return GestureDetector(
+    onTap: (){
+      Get.toNamed(Routes.LEARNING, arguments: 'hero$index');
+    },
+    child: Stack(
+      children: [
+        Hero(
+          tag: 'hero$index',
+          child: Container(
+            margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+            decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(10),
+                image: const DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        'https://i.ytimg.com/vi/317jz-PU7Mg/maxresdefault.jpg'))),
+          ),
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 25, right: 25, bottom: 25, top: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('5 things to know about the \'conundrum\' of lupus',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14)),
+              const Spacer(),
+              Row(
+                children: [
+                  const Expanded(
+                      child: Text('David BeckTom x ChickSonSock',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12))),
+                  const Gap(15),
+                  Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Icon(Icons.access_time, size: 15, color: Colors.white),
+                          Gap(10),
+                          Flexible(
+                            child: Text('Sunday, 9 May 2021',
+                                maxLines: 1,
+                                textAlign: TextAlign.end,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12)
+                            ),
+                          )
+                        ],
+                      )
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
     ),
   );
 }

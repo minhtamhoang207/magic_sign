@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:magic_sign/data/repositories/sample_repository_impl.dart';
 import 'package:magic_sign/domain/usecases/sample_usecases.dart';
 
+import '../presentation/detect_sign/controllers/detect_sign_controller.dart';
+
 
 class DependencyInjection {
   static Future<void> init() async {

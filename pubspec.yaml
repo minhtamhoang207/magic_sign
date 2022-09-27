@@ -19,9 +19,15 @@ dependencies:
   carousel_slider: any
   huawei_account: any
   agconnect_auth: 1.5.0+300
+  flutter_camera: any
+  path_provider: any
+  video_player: any
+  camera: any
+  fluttertoast: any
 
   flutter: 
     sdk: flutter
+  get_cli: ^1.7.1
 
 dev_dependencies: 
   flutter_lints: any

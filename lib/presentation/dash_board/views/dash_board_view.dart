@@ -1,9 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:magic_sign/gen/assets.gen.dart';
+import 'package:magic_sign/presentation/detect_sign/controllers/detect_sign_controller.dart';
 import '../controllers/dash_board_controller.dart';
 
 class DashBoardView extends GetView<DashBoardController> {
@@ -16,11 +16,11 @@ class DashBoardView extends GetView<DashBoardController> {
           index: 0,
           height: 60.0,
           items: [
-            _bottomBarButton(Icons.home_outlined, 0),
-            _bottomBarButton(Icons.explore_outlined, 1),
-            _bottomBarButton(CupertinoIcons.video_camera, 2),
-            _bottomBarButton(Icons.newspaper_rounded, 3),
-            _bottomBarButton(Icons.person_outline, 4)
+            _bottomBarButton(Assets.svg.icHome, 0),
+            _bottomBarButton(Assets.svg.icCompass, 1),
+            _bottomBarButton(Assets.svg.icCamera, 2),
+            _bottomBarButton(Assets.svg.icNews, 3),
+            _bottomBarButton(Assets.svg.icPerson, 4)
           ],
           color: const Color(0xFFEEEEEE),
           buttonBackgroundColor: const Color(0xFF326273),
@@ -28,6 +28,7 @@ class DashBoardView extends GetView<DashBoardController> {
           animationCurve: Curves.easeInOut,
           animationDuration: const Duration(milliseconds: 300),
           onTap: (index) {
+            Get.find<DetectSignController>().onInit();
             controller.setIndex(index: index);
           },
           letIndexChange: (index) => true,
@@ -36,15 +37,13 @@ class DashBoardView extends GetView<DashBoardController> {
   }
 }
 
-Widget _bottomBarButton(IconData icon, int index) {
+Widget _bottomBarButton(String icon, int index) {
   return Padding(
       padding: const EdgeInsets.all(12),
-      child: Obx(() => Icon(icon,
-          size: index == 2? 35:28,
+      child: Obx(() => SvgPicture.asset(icon,
+          height: 24,
+          width: 24,
           color: Get.find<DashBoardController>().pageIndex.value == index
               ? Colors.white
-              : Colors.black54
-      )
-      )
-  );
+              : Colors.black)));
 }

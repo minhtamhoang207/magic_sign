@@ -5,8 +5,8 @@ import '../controllers/detect_sign_controller.dart';
 class DetectSignBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DetectSignController>(
-      () => DetectSignController(),
+    Get.put<DetectSignController>(
+      DetectSignController(),
     );
   }
 }
