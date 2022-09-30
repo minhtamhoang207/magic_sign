@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:magic_sign/core/routes/app_pages.dart';
 import 'package:magic_sign/domain/usecases/sample_usecases.dart';
+import '../../../routes/app_pages.dart';
 
 class SplashController extends GetxController with StateMixin<SplashController>{
   SampleUseCases sampleUseCases;

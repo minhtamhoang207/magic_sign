@@ -1,14 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-
 import 'package:get/get.dart';
 import 'package:simple_animations/simple_animations.dart';
-
-import '../../../core/routes/app_pages.dart';
-import '../../../gen/assets.gen.dart';
 import '../controllers/sign_up_controller.dart';
 
 class SignUpView extends GetView<SignUpController> {

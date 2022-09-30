@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magic_sign/di/di.dart';
-import 'package:magic_sign/presentation/detect_sign/controllers/detect_sign_controller.dart';
 
-import 'core/routes/app_pages.dart';
+import 'app/routes/app_pages.dart';
 
 
 void main() async {

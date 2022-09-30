@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:magic_sign/core/routes/app_pages.dart';
 import 'package:magic_sign/gen/assets.gen.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/intro_controller.dart';
 
 class IntroView extends GetView<IntroController> {
