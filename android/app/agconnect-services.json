@@ -73,6 +73,9 @@
 	},
 	"region":"SG",
 	"configuration_version":"3.0",
+	"processing_location_policy":{
+		"mlkit":"1"
+	},
 	"appInfos":[
 		{
 			"package_name":"com.tom.magic_sign",

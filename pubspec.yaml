@@ -24,6 +24,12 @@ dependencies:
   video_player: any
   camera: any
   fluttertoast: any
+  huawei_ml_language:
+  dio: ^4.0.6
+  retrofit: ^3.0.1+1
+  logger: any  #for logging purpose
+  freezed_annotation:
+  json_annotation:
 
   flutter: 
     sdk: flutter
@@ -35,6 +41,9 @@ dev_dependencies:
     sdk: flutter
   build_runner: any
   flutter_gen_runner: any
+  retrofit_generator:
+  json_serializable:
+  freezed:
 
 flutter: 
   uses-material-design: true

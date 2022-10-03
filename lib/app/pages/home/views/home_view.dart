@@ -159,13 +159,15 @@ Widget _feature() {
         ),
         const Padding(
           padding: EdgeInsets.all(8.0),
-          child: Text('Translate sign language into text/speech and so on ...',
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.black87)),
+          child: FittedBox(
+            child: Text('Translate sign language \ninto text/speech and so on ...',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: Colors.black87)),
+          ),
         )
       ],
     ),

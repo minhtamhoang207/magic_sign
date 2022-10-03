@@ -1,5 +1,5 @@
-import '../entities/sample.dart';
+import 'package:magic_sign/data/models/coffee.dart';
 
 abstract class SampleRepository {
-  Future<Sample> getSomething();
+  Future<List<Coffee>> getListIcedCoffee();
 }
