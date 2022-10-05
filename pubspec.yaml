@@ -30,6 +30,7 @@ dependencies:
   logger: any  #for logging purpose
   freezed_annotation:
   json_annotation:
+  auto_size_text:
 
   flutter: 
     sdk: flutter

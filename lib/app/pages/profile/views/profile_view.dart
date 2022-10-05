@@ -9,42 +9,42 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
           backgroundColor: Color(0xFFF1EFEF),
-          body: ARS(),
-          // body: ListView(
-          //   padding: const EdgeInsets.only(left: 15, right: 15, top: 50),
-          //   children: [
-          //     const SizedBox(
-          //       height: 100,
-          //       width: 100,
-          //       child: CircleAvatar(
-          //         backgroundImage: NetworkImage(
-          //           'https://res.cloudinary.com/practicaldev/image/fetch/s--T0YOJuAU--/c_imagga_scale,f_auto,fl_progressive,h_900,q_auto,w_1600/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/durv8e5fj4qqlxbdxzxl.jpg',
-          //         ),
-          //       ),
-          //     ),
-          //     const Gap(15),
-          //     const Center(
-          //       child: Text('Hoang Minh Tam',
-          //           maxLines: 2,
-          //           textAlign: TextAlign.center,
-          //           style: TextStyle(
-          //               fontWeight: FontWeight.bold,
-          //               fontSize: 26,
-          //               color: Colors.black)),
-          //     ),
-          //     const Gap(50),
-          //     _information(title: 'Name', content: 'Hoang Minh Tam', icon: Icons.person),
-          //     _information(title: 'Email', content: 'Hoang Minh Tam', icon: Icons.mail),
-          //     _information(title: 'Password', content: 'Hoang Minh Tam', icon: Icons.lock),
-          //     _information(title: 'Phone number', content: 'Hoang Minh Tam', icon: Icons.phone_android),
-          //     _information(title: 'Privacy policy', content: 'Hoang Minh Tam', icon: Icons.privacy_tip_rounded, edit: false),
-          //     const Gap(50),
-          //     logoutButton()
-          //   ],
-          // )
+          // body: ARS(),
+          body: ListView(
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 50),
+            children: [
+              const SizedBox(
+                height: 100,
+                width: 100,
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    'https://res.cloudinary.com/practicaldev/image/fetch/s--T0YOJuAU--/c_imagga_scale,f_auto,fl_progressive,h_900,q_auto,w_1600/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/durv8e5fj4qqlxbdxzxl.jpg',
+                  ),
+                ),
+              ),
+              const Gap(15),
+              const Center(
+                child: Text('Hoang Minh Tam',
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 26,
+                        color: Colors.black)),
+              ),
+              const Gap(50),
+              _information(title: 'Name', content: 'Hoang Minh Tam', icon: Icons.person),
+              _information(title: 'Email', content: 'Hoang Minh Tam', icon: Icons.mail),
+              _information(title: 'Password', content: 'Hoang Minh Tam', icon: Icons.lock),
+              _information(title: 'Phone number', content: 'Hoang Minh Tam', icon: Icons.phone_android),
+              _information(title: 'Privacy policy', content: 'Hoang Minh Tam', icon: Icons.privacy_tip_rounded, edit: false),
+              const Gap(50),
+              logoutButton()
+            ],
+          )
       ),
     );
   }

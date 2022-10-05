@@ -1,4 +1,5 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -167,30 +168,37 @@ class ExampleCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Gap(20),
             SizedBox(
                 height: Get.height * 0.3, child: Image.asset(candidate.image)),
-            const Gap(30),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 30, bottom: 10),
-              child: Text(
-                candidate.title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+            const Gap(50),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 30, bottom: 10),
+                child: AutoSizeText(
+                  candidate.title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: Text(
-                candidate.content,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white.withOpacity(0.9)),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: AutoSizeText(
+                  candidate.content,
+                  textAlign: TextAlign.center,
+                  minFontSize: 12,
+                  maxFontSize: 12,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white.withOpacity(0.9)),
+                ),
               ),
             )
           ],

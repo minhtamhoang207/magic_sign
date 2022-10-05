@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -144,31 +145,38 @@ Widget _feature() {
       ],
     ),
     child: Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          height: 90,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-              ),
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://scitechdaily.com/images/Cat-COVID-19-Mask-777x518.jpg?ezimgfmt=rs:350x233/rscb2/ngcb2/notWebP'))),
+        Expanded(
+          flex: 2,
+          child: Container(
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                ),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                        'https://scitechdaily.com/images/Cat-COVID-19-Mask-777x518.jpg?ezimgfmt=rs:350x233/rscb2/ngcb2/notWebP'))),
+          ),
         ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: FittedBox(
-            child: Text('Translate sign language \ninto text/speech and so on ...',
+        const Expanded(
+          flex: 1,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+            child: AutoSizeText('Translate sign language into teTranslate sign language into text/speech and so on ... Translate sign language into text/speech and Translate sign language into text/speech and so on ... Translate sign language into text/speech and Translate sign language into text/speech and so on ... Translate sign language into text/speech and xt/speech and so on ... Translate sign language into text/speech and so on ...',
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
+                minFontSize: 12,
+                maxFontSize: 14,
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                     color: Colors.black87)),
           ),
-        )
+        ),
+        const Gap(8)
       ],
     ),
   );
