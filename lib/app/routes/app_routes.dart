@@ -9,10 +9,12 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const SIGN_UP = _Paths.SIGN_UP;
   static const DASH_BOARD = _Paths.DASH_BOARD;
-  static const EXPLORE =  _Paths.EXPLORE;
-  static const DETECT_SIGN =  _Paths.DETECT_SIGN;
-  static const LEARNING =  _Paths.LEARNING;
-  static const PROFILE =  _Paths.PROFILE;
+  static const EXPLORE = _Paths.EXPLORE;
+  static const DETECT_SIGN = _Paths.DETECT_SIGN;
+  static const LEARNING = _Paths.LEARNING;
+  static const PROFILE = _Paths.PROFILE;
+  static const NEWS_DETAIL = _Paths.NEWS_DETAIL;
+  static const TEXT_TO_SIGN = _Paths.TEXT_TO_SIGN;
 }
 
 abstract class _Paths {
@@ -27,4 +29,6 @@ abstract class _Paths {
   static const DETECT_SIGN = '/detect-sign';
   static const LEARNING = '/learning';
   static const PROFILE = '/profile';
+  static const NEWS_DETAIL = '/news-detail';
+  static const TEXT_TO_SIGN = '/text-to-sign';
 }

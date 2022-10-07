@@ -6,7 +6,7 @@ class ExploreBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ExploreController>(
-      () => ExploreController(),
+      () => ExploreController(newsUseCases: Get.find()),
     );
   }
 }

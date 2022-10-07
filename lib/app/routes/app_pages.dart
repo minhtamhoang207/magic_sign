@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import '../pages/dash_board/bindings/dash_board_binding.dart';
 import '../pages/dash_board/views/dash_board_view.dart';
 import '../pages/detect_sign/bindings/detect_sign_binding.dart';
@@ -13,12 +14,17 @@ import '../pages/learning/bindings/learning_binding.dart';
 import '../pages/learning/views/learning_view.dart';
 import '../pages/login/bindings/login_binding.dart';
 import '../pages/login/views/login_view.dart';
+import '../pages/news_detail/bindings/news_detail_binding.dart';
+import '../pages/news_detail/views/news_detail_view.dart';
 import '../pages/profile/bindings/profile_binding.dart';
 import '../pages/profile/views/profile_view.dart';
 import '../pages/sign_up/bindings/sign_up_binding.dart';
 import '../pages/sign_up/views/sign_up_view.dart';
 import '../pages/splash/bindings/splash_binding.dart';
 import '../pages/splash/views/splash_view.dart';
+import '../pages/text_to_sign/bindings/text_to_sign_binding.dart';
+import '../pages/text_to_sign/views/text_to_sign_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
@@ -74,6 +80,16 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEWS_DETAIL,
+      page: () => NewsDetailView(),
+      binding: NewsDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.TEXT_TO_SIGN,
+      page: () => TextToSignView(),
+      binding: TextToSignBinding(),
     ),
   ];
 }

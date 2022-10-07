@@ -21,7 +21,7 @@ dependencies:
   agconnect_auth: 1.5.0+300
   flutter_camera: any
   path_provider: any
-  video_player: any
+  better_player: any
   camera: any
   fluttertoast: any
   huawei_ml_language:

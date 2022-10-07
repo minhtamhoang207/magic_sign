@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:magic_sign/app/pages/explore/controllers/explore_controller.dart';
 import 'package:magic_sign/gen/assets.gen.dart';
 import '../../detect_sign/controllers/detect_sign_controller.dart';
 import '../controllers/dash_board_controller.dart';
@@ -11,9 +12,9 @@ class DashBoardView extends GetView<DashBoardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: CurvedNavigationBar(
+        bottomNavigationBar: Obx(()=>CurvedNavigationBar(
           key: controller.bottomNavigationKey,
-          index: 0,
+          index: controller.pageIndex.value,
           height: 60.0,
           items: [
             _bottomBarButton(Assets.svg.icHome, 0),
@@ -28,11 +29,10 @@ class DashBoardView extends GetView<DashBoardController> {
           animationCurve: Curves.easeInOut,
           animationDuration: const Duration(milliseconds: 300),
           onTap: (index) {
-            Get.find<DetectSignController>().onInit();
             controller.setIndex(index: index);
           },
           letIndexChange: (index) => true,
-        ),
+        )),
         body: Obx(() => controller.pages[controller.pageIndex.value]));
   }
 }

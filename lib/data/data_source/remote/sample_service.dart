@@ -5,7 +5,7 @@ import 'package:retrofit/http.dart';
 part 'sample_service.g.dart';
 
 @RestApi(
-  baseUrl: 'https://api.sampleapis.com'
+    baseUrl: 'https://api.sampleapis.com'
 )
 abstract class SampleService {
   factory SampleService(Dio dio, {String baseUrl}) = _SampleService;

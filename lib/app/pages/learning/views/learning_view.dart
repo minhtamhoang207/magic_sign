@@ -9,14 +9,14 @@ class LearningView extends GetView<LearningController> {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
-        body: News(),
+        body: NewsA(),
       ),
     );
   }
 }
 
-class News extends StatelessWidget {
-  const News({Key? key}) : super(key: key);
+class NewsA extends StatelessWidget {
+  const NewsA({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(

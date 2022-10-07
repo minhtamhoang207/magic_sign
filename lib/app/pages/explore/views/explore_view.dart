@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:magic_sign/app/utils/date_time.dart';
+import 'package:magic_sign/data/models/news.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/explore_controller.dart';
 
@@ -9,141 +11,199 @@ class ExploreView extends GetView<ExploreController> {
   const ExploreView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView(
-      children: [
-        const Gap(20),
-        const Align(
-          alignment: Alignment.center,
-          child: Text(
-            'Latest News',
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+    return SafeArea(
+      child: Scaffold(
+          body: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 30),
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Latest News',
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
-        ),
-        const Gap(20),
-        CarouselSlider.builder(
-            itemCount: 15,
-            itemBuilder:
-                (BuildContext context, int itemIndex, int pageViewIndex) =>
-                    _lastestNewsItem(itemIndex, pageViewIndex),
-            options: CarouselOptions(
-              aspectRatio: 4 / 2.6,
-              initialPage: 0,
-              enlargeStrategy: CenterPageEnlargeStrategy.height,
-              enlargeCenterPage: true,
-              padEnds: false,
-              autoPlayCurve: Curves.decelerate,
-              viewportFraction: 0.9,
-              scrollDirection: Axis.horizontal,
-            )),
-        const Gap(30),
-        SizedBox(
-          height: 40,
-          width: Get.width,
-          child: ListView.builder(
-            itemCount: 20,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return _topic(index);
-            },
-          ),
-        ),
-        const Gap(30),
-        Column(
-          children: List.generate(
-              100,
-              (index) => SizedBox(
-                    width: Get.width,
-                    height: Get.width / 2,
-                    child: _topicItem(index),
-                  )),
-        )
-      ],
-    ));
+          SizedBox(
+              height: 40,
+              width: Get.width,
+              child: ListView.builder(
+                itemCount: controller.topic.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Obx(() => _topic(index, controller.topic[index]));
+                },
+              )),
+          const Gap(20),
+          Expanded(
+              child: controller.obx(
+                  (state) => RefreshIndicator(
+                        onRefresh: () => controller.getListNews(),
+                        child: CustomScrollView(
+                          slivers: [
+                            SliverToBoxAdapter(
+                              child: controller.news.value.isEmpty?
+                                  const SizedBox():Padding(
+                                padding:
+                                const EdgeInsets.only(top: 30, bottom: 50),
+                                child: CarouselSlider.builder(
+                                    itemCount:
+                                    controller.news.value.length >= 15
+                                        ? 15
+                                        : controller.news.value.length,
+                                    itemBuilder: (BuildContext context,
+                                        int itemIndex, int pageViewIndex) =>
+                                        _lastestNewsItem(
+                                            itemIndex,
+                                            pageViewIndex,
+                                            controller.news.value[itemIndex]),
+                                    options: CarouselOptions(
+                                      aspectRatio: 4/2.1,
+                                      initialPage: 0,
+                                      autoPlay: true,
+                                      enlargeStrategy:
+                                      CenterPageEnlargeStrategy.height,
+                                      enlargeCenterPage: true,
+                                      // padEnds: false,
+                                      autoPlayCurve: Curves.decelerate,
+                                      viewportFraction: 0.8,
+                                      scrollDirection: Axis.horizontal,
+                                    )),
+                              ),
+                            ),
+                            SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                return SizedBox(
+                                  width: Get.width,
+                                  height: Get.width / 2,
+                                  child: _topicItem(
+                                      index, controller.news.value[index]),
+                                );
+                              },
+                              childCount: controller.news.value.length,
+                            )),
+                          ],
+                        ),
+                      ),
+                  onLoading: const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  ),
+                  onError: (error) => Center(
+                        child: Text(error ?? ''),
+                      )))
+        ],
+      )),
+    );
   }
 }
 
-Widget _lastestNewsItem(int itemIndex, int pageIndex) {
-  return Stack(
-    children: [
-      GestureDetector(
-        onTap: (){
-          Get.toNamed(Routes.LEARNING, arguments: 'fhero$itemIndex');
-        },
-        child: Container(
+Widget _lastestNewsItem(int itemIndex, int pageIndex, Article? article) {
+  return GestureDetector(
+    onTap: () {
+      Get.toNamed(Routes.NEWS_DETAIL, arguments:{
+        'heroTag': 'fhero$itemIndex',
+        'article': article
+      });
+    },
+    child: Stack(
+      children: [
+        Hero(
+          tag: 'fhero$itemIndex',
+          child: Container(
+            margin: const EdgeInsets.only(left: 15),
+            decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(article?.urlToImage ?? ''))),
+          ),
+        ),
+        Container(
           margin: const EdgeInsets.only(left: 15),
           decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://i.ytimg.com/vi/317jz-PU7Mg/maxresdefault.jpg'))),
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.black45.withOpacity(0.4),
+          ),
         ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Gap(20),
-            Text('by Tomoe Cruise',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12)),
-            Gap(5),
-            Text(
-                'Crypto investors should be prepared to lose all their money, BOE governor says by Tomoe Cruise by Tomoe Cruiseby Tomoe Cruise by Tomoe Cruise ',
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18)),
-            Spacer(),
-            Text(
-                '“I’m going to say this very bluntly again,” he added. “Buy them only if you’re prepared to lose all your money.”',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 11))
-          ],
-        ),
-      )
-    ],
+        Padding(
+          padding: const EdgeInsets.all(25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Gap(20),
+              Text(article?.author ?? 'Unknown',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12)),
+              const Gap(5),
+              Text(article?.title ?? '',
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18)),
+              const Spacer(),
+              Text(article?.description ?? '',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 11))
+            ],
+          ),
+        )
+      ],
+    ),
   );
 }
 
-Widget _topic(int index) {
+Widget _topic(int index, String title) {
+  final controller = Get.find<ExploreController>();
   return Padding(
     padding: const EdgeInsets.only(left: 15),
-    child: Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(0.2), width: 2),
-          borderRadius: BorderRadius.circular(30),
-          color: index == 0 ? const Color(0xFFFF3A44) : Colors.white),
-      child: Center(
-        child: Text(
-          'Technology',
-          style: TextStyle(
-              color: index == 0 ? Colors.white : Colors.black,
-              fontWeight: FontWeight.w600),
+    child: InkWell(
+      onTap: () {
+        controller.chooseTopic(index);
+      },
+      borderRadius: BorderRadius.circular(30),
+      child: Ink(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.withOpacity(0.2), width: 2),
+            borderRadius: BorderRadius.circular(30),
+            color: index == controller.currentTopic.value
+                ? const Color(0xFFFF3A44)
+                : Colors.white),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+                color: index == controller.currentTopic.value
+                    ? Colors.white
+                    : Colors.black,
+                fontWeight: FontWeight.w600),
+          ),
         ),
       ),
     ),
   );
 }
 
-Widget _topicItem(int index) {
+Widget _topicItem(int index, Article? article) {
   return GestureDetector(
-    onTap: (){
-      Get.toNamed(Routes.LEARNING, arguments: 'hero$index');
+    onTap: () {
+      Get.toNamed(Routes.NEWS_DETAIL, arguments:{
+        'heroTag': 'hero$index',
+        'article': article
+      });
     },
     child: Stack(
       children: [
@@ -154,10 +214,16 @@ Widget _topicItem(int index) {
             decoration: BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
+                image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(
-                        'https://i.ytimg.com/vi/317jz-PU7Mg/maxresdefault.jpg'))),
+                    image: NetworkImage(article?.urlToImage ?? ''))),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black45.withOpacity(0.4),
           ),
         ),
         Padding(
@@ -166,46 +232,47 @@ Widget _topicItem(int index) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('5 things to know about the \'conundrum\' of lupus',
+              Text(article?.title ?? '',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                       fontSize: 14)),
               const Spacer(),
               Row(
                 children: [
-                  const Expanded(
-                      child: Text('David BeckTom x ChickSonSock',
+                  Expanded(
+                      child: Text(article?.author ?? '',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontSize: 12))),
                   const Gap(15),
                   Expanded(
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Icon(Icons.access_time, size: 15, color: Colors.white),
-                          Gap(10),
-                          Flexible(
-                            child: Text('Sunday, 9 May 2021',
-                                maxLines: 1,
-                                textAlign: TextAlign.end,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12)
-                            ),
-                          )
-                        ],
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Icon(Icons.access_time,
+                          size: 15, color: Colors.white),
+                      const Gap(10),
+                      Flexible(
+                        child: Text(
+                            AppDateTime.formatDateTypeWeekDay(
+                                article?.publishedAt),
+                            maxLines: 1,
+                            textAlign: TextAlign.end,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12)),
                       )
-                  ),
+                    ],
+                  )),
                 ],
               )
             ],
