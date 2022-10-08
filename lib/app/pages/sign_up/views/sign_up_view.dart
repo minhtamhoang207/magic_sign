@@ -24,6 +24,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen>
     with TickerProviderStateMixin {
   CustomAnimationControl control = CustomAnimationControl.play;
+  final controller = Get.find<SignUpController>();
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                               border: Border(
                                   bottom: BorderSide(color: Colors.grey))),
                           child: TextField(
+                            controller: controller.userName,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Username",
@@ -94,9 +96,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                               border: Border(
                                   bottom: BorderSide(color: Colors.grey))),
                           child: TextField(
+                            controller: controller.email,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Email or Phone number",
+                                hintText: "Email",
                                 prefixIcon: const Icon(CupertinoIcons.mail),
                                 contentPadding: const EdgeInsets.only(top: 15),
                                 hintStyle: TextStyle(color: Colors.grey[400])),
@@ -108,6 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                               border: Border(
                                   bottom: BorderSide(color: Colors.grey))),
                           child: TextField(
+                            controller: controller.password,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Password",
@@ -120,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                         Container(
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
+                            controller: controller.confirmPassword,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Confirm password",
@@ -134,23 +139,27 @@ class _SignUpScreenState extends State<SignUpScreen>
                   ),
                 ),
                 const Gap(50),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: const LinearGradient(colors: [
-                        Color(0xFF4E65FF),
-                        Color(0xFF5BBBE1),
-                      ])),
-                  child: const Center(
-                    child: Text("Continue",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16)),
+                controller.obx((state) => GestureDetector(
+                  onTap: () => controller.register(),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(colors: [
+                          Color(0xFF4E65FF),
+                          Color(0xFF5BBBE1),
+                        ])),
+                    child: const Center(
+                      child: Text("Continue",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16)),
+                    ),
                   ),
                 ),
+                onLoading: CircularProgressIndicator()),
                 const Gap(150),
                 Text.rich(
                   TextSpan(

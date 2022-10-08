@@ -45,6 +45,8 @@ dev_dependencies:
   retrofit_generator:
   json_serializable:
   freezed:
+  flutter_launcher_icons: "^0.10.0"
+
 
 flutter: 
   uses-material-design: true
@@ -52,3 +54,7 @@ flutter:
     - assets/image/
     - assets/svg/
 
+flutter_icons:
+  android: "launcher_icon"
+  image_path: "assets/image/ic_launcher.jpg"
+  min_sdk_android: 21

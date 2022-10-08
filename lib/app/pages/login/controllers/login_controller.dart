@@ -1,32 +1,40 @@
 import 'dart:developer';
 
 import 'package:agconnect_auth/agconnect_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:huawei_account/huawei_account.dart';
 
-class LoginController extends GetxController {
-  //TODO: Implement LoginController
+import '../../../../data/models/user_sign_up.dart';
+import '../../../../domain/usecases/auth_usecase.dart';
+import '../../../routes/app_pages.dart';
 
-  final count = 0.obs;
+class LoginController extends GetxController with StateMixin<LoginController> {
+
+  AuthUseCase authUseCase;
+  LoginController({required this.authUseCase});
+
+  TextEditingController userName = TextEditingController();
+  TextEditingController password = TextEditingController();
+
   @override
   void onInit() {
+    change(this, status: RxStatus.success());
     super.onInit();
   }
 
-  huaweiLogin () async {
-
-  try {
-    SignInResult signInResult = await AGCAuth.instance.signInAnonymously();
-    print('--------------->>>>>>>>>>');
-    TokenResult token = await signInResult.user!.getToken();
-    print('TOKEN ${token.token}');
-    inspect(signInResult.user?.getToken()??'');
-    print('--------------->>>>>>>>>');
-  } catch (e){
-    print('-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-    print(e.toString());
-    print('-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-  }
+  huaweiLogin() async {
+    try {
+      SignInResult signInResult = await AGCAuth.instance.signInAnonymously();
+      print('--------------->>>>>>>>>>');
+      TokenResult token = await signInResult.user!.getToken();
+      print('TOKEN ${token.token}');
+      inspect(signInResult.user?.getToken() ?? '');
+      print('--------------->>>>>>>>>');
+    } catch (e) {
+      print('-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+      print(e.toString());
+      print('-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+    }
     //     .then((signInResult){
     //   print('huhu');
     //   AGCUser? user = signInResult.user;
@@ -54,6 +62,24 @@ class LoginController extends GetxController {
     // }
   }
 
+
+  login() async {
+    try{
+      change(this, status: RxStatus.loading());
+      if(userName.text.isNotEmpty && password.text.isNotEmpty){
+        await authUseCase.login(userAuth: UserAuth(
+            username: userName.text,
+            password: password.text,
+        ));
+        Get.offAllNamed(Routes.DASH_BOARD);
+        change(this, status: RxStatus.success());
+      }
+    } catch(e){
+      log(e.toString());
+      change(this, status: RxStatus.success());
+    }
+  }
+
   @override
   void onReady() {
     super.onReady();
@@ -61,5 +87,4 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }

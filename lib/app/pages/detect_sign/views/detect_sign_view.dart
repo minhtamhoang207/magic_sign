@@ -7,16 +7,14 @@ import '../controllers/detect_sign_controller.dart';
 import 'dart:async';
 import 'package:camera/camera.dart';
 
-
 class DetectSignView extends GetView<DetectSignController> {
   const DetectSignView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text('DETECT SIGN VIEW'),
-      )
-    );
+        body: Center(
+      child: Text('DETECT SIGN VIEW'),
+    ));
   }
 }
 

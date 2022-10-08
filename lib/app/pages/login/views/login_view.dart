@@ -30,6 +30,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
   CustomAnimationControl control = CustomAnimationControl.play;
+  final controller = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +90,10 @@ class _LoginScreenState extends State<LoginScreen>
                               border: Border(
                                   bottom: BorderSide(color: Colors.grey))),
                           child: TextField(
+                            controller: controller.userName,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: "Email or Phone number",
+                                hintText: "Username",
                                 prefixIcon: const Icon(CupertinoIcons.mail),
                                 contentPadding: const EdgeInsets.only(top: 15),
                                 hintStyle: TextStyle(color: Colors.grey[400])),
@@ -100,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen>
                         Container(
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
+                            controller: controller.password,
                             obscureText: true,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -127,26 +130,28 @@ class _LoginScreenState extends State<LoginScreen>
                 IntrinsicWidth(
                   child: Column(
                     children: [
-                      InkWell(
-                        onTap: ()=> Get.toNamed(Routes.DASH_BOARD),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 20),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: const LinearGradient(colors: [
-                                Color(0xFF4E65FF),
-                                Color(0xFF5BBBE1),
-                              ])),
-                          child: const Center(
-                            child: Text("LOGIN",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16)),
+                      controller.obx((state) {
+                        return InkWell(
+                          onTap: () => controller.login(),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: const LinearGradient(colors: [
+                                  Color(0xFF4E65FF),
+                                  Color(0xFF5BBBE1),
+                                ])),
+                            child: const Center(
+                              child: Text("LOGIN",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)),
+                            ),
                           ),
-                        ),
-                      ),
+                        );
+                      }, onLoading: const CircularProgressIndicator()),
                       Padding(
                           padding: const EdgeInsets.symmetric(vertical: 60),
                           child: Row(
@@ -171,7 +176,8 @@ class _LoginScreenState extends State<LoginScreen>
                             ],
                           )),
                       InkWell(
-                        onTap: () async => Get.find<LoginController>().huaweiLogin(),
+                        onTap: () async =>
+                            Get.find<LoginController>().huaweiLogin(),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 20),
@@ -181,7 +187,8 @@ class _LoginScreenState extends State<LoginScreen>
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              SvgPicture.asset(Assets.svg.huaweiLogo, width: 35),
+                              SvgPicture.asset(Assets.svg.huaweiLogo,
+                                  width: 35),
                               const Gap(8),
                               const Text("Sign in with HUAWEI ID",
                                   style: TextStyle(
@@ -208,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen>
                       TextSpan(
                         text: 'Sign up',
                         recognizer: TapGestureRecognizer()
-                          ..onTap = (){
+                          ..onTap = () {
                             Get.toNamed(Routes.SIGN_UP);
                           },
                         style: const TextStyle(

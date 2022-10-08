@@ -106,7 +106,7 @@ Widget _information({
 Widget logoutButton(){
   return InkWell(
     onTap: (){
-      Get.offAllNamed(Routes.INTRO);
+      Get.offAllNamed(Routes.LOGIN);
     },
     child: Container(
       padding: const EdgeInsets.symmetric(
