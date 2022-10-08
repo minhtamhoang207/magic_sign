@@ -15,6 +15,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const NEWS_DETAIL = _Paths.NEWS_DETAIL;
   static const TEXT_TO_SIGN = _Paths.TEXT_TO_SIGN;
+  static const COURSE_DETAIL =  _Paths.COURSE_DETAIL;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const NEWS_DETAIL = '/news-detail';
   static const TEXT_TO_SIGN = '/text-to-sign';
+  static const COURSE_DETAIL = '/course-detail';
 }

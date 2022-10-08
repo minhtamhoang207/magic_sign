@@ -1,189 +1,159 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:magic_sign/app/routes/app_pages.dart';
 import '../controllers/learning_controller.dart';
 
 class LearningView extends GetView<LearningController> {
   const LearningView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
-        body: NewsA(),
+        body: Column(
+          children: [
+            _header(),
+            _divider(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 20,
+                itemBuilder: (context, index){
+                  return course(index);
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-class NewsA extends StatelessWidget {
-  const NewsA({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(
-              delegate:
-                  CustomSliverAppBarDelegate(expandedHeight: Get.height * 0.35),
-              pinned: true,
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  const Gap(25),
-                  IntrinsicHeight(
-                    child: Row(
-                      children: [
-                        const Gap(20),
-                        const VerticalDivider(color: Colors.orange, thickness: 5),
-                        const Gap(10),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              const Text('Crypto investors should be prepared to lose all their money, BOE governor says',
-                                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
-                              const Gap(10),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Icon(Icons.access_time, color: Colors.black45, size: 16),
-                                  Gap(8),
-                                  Expanded(
-                                    child: Text('Sunday, 9 May 2021',
-                                        style: TextStyle(color: Colors.black45, fontWeight: FontWeight.bold)),
-                                  ),
-                                  Gap(15)
-                                ],
-                              ),
-                              const Gap(5),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Icon(Icons.account_circle_rounded, color: Colors.black45, size: 16),
-                                  Gap(8),
-                                  Expanded(
-                                    child: Text('Published by Ryan Browne',
-                                        style: TextStyle(color: Colors.black45, fontWeight: FontWeight.bold)),
-                                  ),
-                                  Gap(15)
-                                ],
-                              ),
-                            ],
-                          )
-                        ),
-                        const Gap(15),
-                      ],
-                    ),
-                  ),
-                  const Gap(20),
-                  const Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                    """
-LONDON — Cryptocurrencies “have no intrinsic value” and people who invest in them should be prepared to lose all their money, Bank of England Governor Andrew Bailey said.
-
-Digital currencies like bitcoin, ether and even dogecoin have been on a tear this year, reminding some investors of the 2017 crypto bubble in which bitcoin blasted toward \$20,000, only to sink as low as \$3,122 a year later.
-
-Asked at a press conference Thursday about the rising value of cryptocurrencies, Bailey said: “They have no intrinsic value. That doesn’t mean to say people don’t put value on them, because they can have extrinsic value. But they have no intrinsic value.”
-                    """,
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16)),
-                  ),
-                  const Gap(100)
-                ]
-              ),
-            )
-          ],
-        ),
-      );
+Widget _header() {
+  return const Padding(
+    padding: EdgeInsets.only(top: 20, bottom: 20, left: 15),
+    child: Align(
+      alignment: Alignment.centerLeft,
+      child: Text(
+        'Learn sign language',
+        style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+      ),
+    ),
+  );
 }
 
-class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  final double expandedHeight;
+Widget _divider() {
+  return Container(
+    margin: EdgeInsets.only(top: 10, bottom: 10, right: Get.width / 2 - 40),
+    height: 3,
+    decoration: const BoxDecoration(
+      color: Color(0xFF0085FF),
+    ),
+  );
+}
 
-  const CustomSliverAppBarDelegate({
-    required this.expandedHeight,
-  });
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-
-    return Stack(
-      clipBehavior: Clip.none,
-      fit: StackFit.expand,
-      children: [
-        buildBackground(shrinkOffset),
-        buildAppBar(shrinkOffset),
-      ],
-    );
-  }
-
-  double appear(double shrinkOffset) => shrinkOffset / expandedHeight;
-
-  double disappear(double shrinkOffset) => 1 - shrinkOffset / expandedHeight;
-
-  Widget buildAppBar(double shrinkOffset) => Opacity(
-        opacity: appear(shrinkOffset),
-        child: AppBar(
-          title: const Text('News'),
-          centerTitle: true,
-          backgroundColor: const Color(0xFF326273),
+Widget course(int index){
+  return Padding(
+    padding: const EdgeInsets.all(15),
+    child: GestureDetector(
+      onTap: () {
+        // Get.toNamed(Routes.NEWS_DETAIL,
+        //     arguments: {'heroTag': 'hero$index', 'article': article});
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
-      );
-
-  Widget buildBackground(double shrinkOffset) => Opacity(
-      opacity: disappear(shrinkOffset),
-      child: Stack(
-        children: [
-          Hero(
-            tag: Get.find<LearningController>().heroTag,
-            child: Container(
-                width: Get.width,
+        height: Get.width / 2.5,
+        child: Row(
+          children: [
+            Hero(
+              tag: 'hero$index',
+              child: Container(
+                height: Get.width / 2.5,
+                width: Get.width / 2.5 ,
                 decoration: BoxDecoration(
-                    color: Colors.grey,
-                    image: const DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            'https://i.ytimg.com/vi/XKeW08R2lYY/hqdefault.jpg')),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 3,
+                        spreadRadius: 1,
                         blurRadius: 3,
-                        offset: const Offset(0, 4), // changes position of shadow
+                        offset:
+                        const Offset(0, 3), // changes position of shadow
                       ),
                     ],
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(8),
-                        bottomRight: Radius.circular(8)))),
-          ),
-          Positioned(
-              top: 15,
-              left: 15,
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.8),
-                  shape: BoxShape.circle
+                    borderRadius: BorderRadius.circular(18),
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage('https://res.cloudinary.com/h3gg/image/upload/v1632387894/Logo/logo_ig2kln.jpg'))),
+              ),
+            ),
+            const Gap(15),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const FittedBox(
+                      child: Text('Technology',
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                              color: Colors.black45)),
+                    ),
+                    const Gap(5),
+                    Expanded(
+                      child: Text(
+                          '10 Chapter',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: Colors.black87)),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: InkWell(
+                        onTap: ()=> Get.toNamed(Routes.COURSE_DETAIL, arguments: 'tag'),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.black12,
+                              width: 2
+                            )
+                          ),
+                          child: const Text(
+                            'View'
+                          ),
+                        ),
+                      )
+                    )
+                  ],
                 ),
-                child: const Center(
-                  child: Icon(
-                    Icons.arrow_back_rounded,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-              )
-          ),
-        ],
-      ));
-
-  @override
-  double get maxExtent => expandedHeight;
-
-  @override
-  double get minExtent => kToolbarHeight;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
+
+

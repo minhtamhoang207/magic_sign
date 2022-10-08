@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../pages/course_detail/bindings/course_detail_binding.dart';
+import '../pages/course_detail/views/course_detail_view.dart';
 import '../pages/dash_board/bindings/dash_board_binding.dart';
 import '../pages/dash_board/views/dash_board_view.dart';
 import '../pages/detect_sign/bindings/detect_sign_binding.dart';
@@ -90,6 +92,11 @@ class AppPages {
       name: _Paths.TEXT_TO_SIGN,
       page: () => TextToSignView(),
       binding: TextToSignBinding(),
+    ),
+    GetPage(
+      name: _Paths.COURSE_DETAIL,
+      page: () => const CourseDetailView(),
+      binding: CourseDetailBinding(),
     ),
   ];
 }

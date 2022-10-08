@@ -65,8 +65,8 @@ class LoginController extends GetxController with StateMixin<LoginController> {
 
   login() async {
     try{
-      change(this, status: RxStatus.loading());
       if(userName.text.isNotEmpty && password.text.isNotEmpty){
+        change(this, status: RxStatus.loading());
         await authUseCase.login(userAuth: UserAuth(
             username: userName.text,
             password: password.text,
