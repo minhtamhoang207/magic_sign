@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magic_sign/di/di.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.SPLASH,
+      builder: BotToastInit(),
       getPages: AppPages.routes,
     );
   }

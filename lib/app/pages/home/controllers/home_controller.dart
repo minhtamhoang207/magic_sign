@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../data/models/news.dart';
 import '../../../../domain/usecases/news_usecase.dart';
+import '../../../../gen/assets.gen.dart';
 
 class HomeController extends GetxController with StateMixin<HomeController>{
 
@@ -13,9 +14,16 @@ class HomeController extends GetxController with StateMixin<HomeController>{
   Rx<List<Article>> news = Rx<List<Article>>([]);
   final List<String> listFeature = [
     'Translate text/speech into sign language',
-    'Translate sign language  into text/speech',
+    'Translate text in image into sign language',
     'Learning sign language',
-    'Sign Language Dictionary'
+    'News'
+  ];
+
+  final List<String> listFeatureImg = [
+    Assets.image.imgSignLanguage.path,
+    Assets.image.imgImageToSign.path,
+    Assets.image.imgLearning.path,
+    Assets.image.imgNews.path,
   ];
 
   @override

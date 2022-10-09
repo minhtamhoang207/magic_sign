@@ -1,18 +1,18 @@
 import 'package:get/get.dart';
-import 'package:magic_sign/data/models/coffee.dart';
-import 'package:magic_sign/domain/usecases/sample_usecases.dart';
+import 'package:magic_sign/data/data_source/local/local_storage.dart';
 import '../../../routes/app_pages.dart';
 
 class SplashController extends GetxController with StateMixin<SplashController>{
-  SampleUseCases sampleUseCases;
-  SplashController({required this.sampleUseCases});
 
-  final count = 0.obs;
   @override
   void onInit() async {
-    final List<Coffee> icedCoffee = await sampleUseCases.getListIcedCoffee();
-    await Future.delayed(const Duration(seconds: 2));
-    Get.offAllNamed(Routes.INTRO);
+    await Future.delayed(const Duration(seconds: 1));
+    String? token = await LocalStorage().getToken();
+    if(token != null && token.isNotEmpty){
+      Get.offAllNamed(Routes.DASH_BOARD);
+    } else {
+      Get.offAllNamed(Routes.INTRO);
+    }
     super.onInit();
   }
 
@@ -25,6 +25,4 @@ class SplashController extends GetxController with StateMixin<SplashController>{
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

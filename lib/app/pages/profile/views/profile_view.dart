@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:huawei_ml_language/huawei_ml_language.dart';
 import 'package:magic_sign/app/routes/app_pages.dart';
+import 'package:magic_sign/data/data_source/local/local_storage.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -105,7 +106,8 @@ Widget _information({
 
 Widget logoutButton(){
   return InkWell(
-    onTap: (){
+    onTap: () async {
+      await LocalStorage().clearAll();
       Get.offAllNamed(Routes.LOGIN);
     },
     child: Container(
@@ -154,10 +156,7 @@ class _ARSState extends State<ARS> {
       child: IconButton(
         onPressed: () async {
           String? value = await recognizer.startRecognizingWithUi(setting);
-          print('zzzzzzzzzzzzzzzzzzzzz..........');
-          print(value??'buzz');
           Fluttertoast.showToast(msg: "You say $value");
-          print('zzzzzzzzzzzzzzzzzzzzz..........');
         },
         icon: const Icon(Icons.mic),
       ),

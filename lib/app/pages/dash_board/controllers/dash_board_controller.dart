@@ -1,6 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:magic_sign/app/pages/text_to_sign/views/text_to_sign_view.dart';
+import 'package:magic_sign/data/data_source/local/local_storage.dart';
 
 import '../../detect_sign/views/detect_sign_view.dart';
 import '../../explore/views/explore_view.dart';
@@ -22,7 +24,7 @@ class DashBoardController extends GetxController {
   ];
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
   }
 

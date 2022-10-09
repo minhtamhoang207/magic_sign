@@ -12,13 +12,34 @@ import 'package:flutter/widgets.dart';
 class $AssetsImageGen {
   const $AssetsImageGen();
 
+  /// File path: assets/image/ic_done.json
+  String get icDone => 'assets/image/ic_done.json';
+
   /// File path: assets/image/ic_launcher.jpg
   AssetGenImage get icLauncher =>
       const AssetGenImage('assets/image/ic_launcher.jpg');
 
+  /// File path: assets/image/ic_sign.png
+  AssetGenImage get icSign => const AssetGenImage('assets/image/ic_sign.png');
+
   /// File path: assets/image/img_feature.png
   AssetGenImage get imgFeature =>
       const AssetGenImage('assets/image/img_feature.png');
+
+  /// File path: assets/image/img_image_to_sign.png
+  AssetGenImage get imgImageToSign =>
+      const AssetGenImage('assets/image/img_image_to_sign.png');
+
+  /// File path: assets/image/img_learning.png
+  AssetGenImage get imgLearning =>
+      const AssetGenImage('assets/image/img_learning.png');
+
+  /// File path: assets/image/img_news.png
+  AssetGenImage get imgNews => const AssetGenImage('assets/image/img_news.png');
+
+  /// File path: assets/image/img_sign_language.png
+  AssetGenImage get imgSignLanguage =>
+      const AssetGenImage('assets/image/img_sign_language.png');
 
   /// File path: assets/image/intro_1.png
   AssetGenImage get intro1 => const AssetGenImage('assets/image/intro_1.png');

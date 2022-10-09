@@ -14,12 +14,16 @@ import '../pages/intro/bindings/intro_binding.dart';
 import '../pages/intro/views/intro_view.dart';
 import '../pages/learning/bindings/learning_binding.dart';
 import '../pages/learning/views/learning_view.dart';
+import '../pages/lesson_detail/bindings/lesson_detail_binding.dart';
+import '../pages/lesson_detail/views/lesson_detail_view.dart';
 import '../pages/login/bindings/login_binding.dart';
 import '../pages/login/views/login_view.dart';
 import '../pages/news_detail/bindings/news_detail_binding.dart';
 import '../pages/news_detail/views/news_detail_view.dart';
 import '../pages/profile/bindings/profile_binding.dart';
 import '../pages/profile/views/profile_view.dart';
+import '../pages/quiz/bindings/quiz_binding.dart';
+import '../pages/quiz/views/quiz_view.dart';
 import '../pages/sign_up/bindings/sign_up_binding.dart';
 import '../pages/sign_up/views/sign_up_view.dart';
 import '../pages/splash/bindings/splash_binding.dart';
@@ -97,6 +101,16 @@ class AppPages {
       name: _Paths.COURSE_DETAIL,
       page: () => const CourseDetailView(),
       binding: CourseDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.QUIZ,
+      page: () => const QuizView(),
+      binding: QuizBinding(),
+    ),
+    GetPage(
+      name: _Paths.LESSON_DETAIL,
+      page: () => const LessonDetailView(),
+      binding: LessonDetailBinding(),
     ),
   ];
 }

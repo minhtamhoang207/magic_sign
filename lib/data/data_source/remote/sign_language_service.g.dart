@@ -10,7 +10,8 @@ part of 'sign_language_service.dart';
 
 class _SignLanguageService implements SignLanguageService {
   _SignLanguageService(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'https://appups-avep4az4yq-de.a.run.app/api/v1';
+    baseUrl ??=
+        'https://5f9e-2405-4802-134-1740-a913-fe77-8d80-e6e.ap.ngrok.io/api/v1';
   }
 
   final Dio _dio;
@@ -34,6 +35,29 @@ class _SignLanguageService implements SignLanguageService {
                 contentType: 'application/octet-stream',
                 responseType: ResponseType.bytes)
             .compose(_dio.options, '/convertToSign',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!.cast<int>();
+    return value;
+  }
+
+  @override
+  Future<List<int>> getSignLanguageVideoFromImg(fileUpload) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Content-Type': 'application/octet-stream'
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = fileUpload;
+    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<int>>(
+        Options(
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'application/octet-stream',
+                responseType: ResponseType.bytes)
+            .compose(_dio.options, '/convertImageToSign',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data!.cast<int>();

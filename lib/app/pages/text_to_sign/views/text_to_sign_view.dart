@@ -29,9 +29,12 @@ class TextToSignView extends GetView<TextToSignController> {
                     onLoading: const Center(
                       child: CircularProgressIndicator.adaptive(),
                     ),
-                    onEmpty: SizedBox(
-                        height: Get.height * 0.3,
-                        child: Image.asset(Assets.image.intro1.path))
+                    onEmpty: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: SizedBox(
+                          height: Get.height * 0.3,
+                          child: Image.asset(Assets.image.intro1.path)),
+                    )
                 )
             ),
             Expanded(
@@ -61,6 +64,7 @@ class TextToSignView extends GetView<TextToSignController> {
                   IconButton(
                       onPressed: () {
                         if (controller.txtController.value.text.isNotEmpty) {
+                          FocusManager.instance.primaryFocus?.unfocus();
                           controller.getSignVideo();
                         }
                       },
@@ -106,7 +110,6 @@ class _MemoryPlayerPageState extends State<MemoryPlayerPage> {
     return Scaffold(
       body: ListView(
         children: [
-          const SizedBox(height: 8),
           AspectRatio(
             aspectRatio: 16 / 9,
             child: BetterPlayer(controller: _betterPlayerController),

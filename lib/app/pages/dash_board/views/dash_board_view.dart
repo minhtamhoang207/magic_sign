@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:magic_sign/app/pages/explore/controllers/explore_controller.dart';
+import 'package:magic_sign/app/pages/learning/controllers/learning_controller.dart';
 import 'package:magic_sign/gen/assets.gen.dart';
 import '../../detect_sign/controllers/detect_sign_controller.dart';
 import '../controllers/dash_board_controller.dart';
@@ -29,7 +30,12 @@ class DashBoardView extends GetView<DashBoardController> {
           animationCurve: Curves.easeInOut,
           animationDuration: const Duration(milliseconds: 300),
           onTap: (index) {
-            controller.setIndex(index: index);
+            if(index == 3){
+              Get.find<LearningController>().onInit();
+              controller.setIndex(index: index);
+            } else {
+              controller.setIndex(index: index);
+            }
           },
           letIndexChange: (index) => true,
         )),

@@ -40,13 +40,12 @@ class _SignUpScreenState extends State<SignUpScreen>
                 Align(
                     alignment: Alignment.topLeft,
                     child: IconButton(
-                      onPressed: ()=> Get.back(),
+                      onPressed: () => Get.back(),
                       alignment: Alignment.centerLeft,
                       splashRadius: 15,
                       padding: const EdgeInsets.all(0),
                       icon: const Icon(Icons.arrow_back_ios_new_rounded),
-                    )
-                    ),
+                    )),
                 const Gap(30),
                 const Text("Enter your details",
                     style:
@@ -139,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                   ),
                 ),
                 const Gap(50),
-                controller.obx((state) => GestureDetector(
+                GestureDetector(
                   onTap: () => controller.register(),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -159,7 +158,6 @@ class _SignUpScreenState extends State<SignUpScreen>
                     ),
                   ),
                 ),
-                onLoading: CircularProgressIndicator()),
                 const Gap(150),
                 Text.rich(
                   TextSpan(

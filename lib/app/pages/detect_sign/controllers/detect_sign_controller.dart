@@ -1,22 +1,34 @@
-import 'package:camera/camera.dart';
-import 'package:get/get.dart';
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide MultipartFile ;
+
+import '../../../../domain/usecases/sign_language_usecase.dart';
 
 class DetectSignController extends GetxController {
-  //TODO: Implement DetectSignController
 
-  CameraController? controller;
-  List<CameraDescription> cameras = [];
-  final count = 0.obs;
+  DetectSignController({required this.signLanguageUseCases});
+
+  SignLanguageUseCases signLanguageUseCases;
+
+  final Rx<List<int>> bytes = Rx<List<int>>([]);
+
+
   @override
   void onInit() async {
-    cameras = await availableCameras();
-    controller = CameraController(CameraDescription(
-        name: cameras.first.name,
-        lensDirection: cameras.first.lensDirection,
-        sensorOrientation: cameras.first.sensorOrientation
-    ), ResolutionPreset.high);
-    controller!.initialize();
     super.onInit();
+  }
+
+  getSignVideo(MultipartFile multipartFile) async {
+    try {
+      bytes.value = await signLanguageUseCases.getSignVideoFromImg(
+          fileUpload: multipartFile
+      );
+      print(bytes.value);
+    } catch (e){
+      log(e.toString());
+      bytes.value = [];
+    }
   }
 
   @override
@@ -29,5 +41,4 @@ class DetectSignController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
 }

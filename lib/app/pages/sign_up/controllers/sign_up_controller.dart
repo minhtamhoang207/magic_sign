@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +8,7 @@ import '../../../../data/models/user_sign_up.dart';
 import '../../../../domain/usecases/auth_usecase.dart';
 import '../../../routes/app_pages.dart';
 
-class SignUpController extends GetxController with StateMixin<SignUpController> {
+class SignUpController extends GetxController {
 
   AuthUseCase authUseCase;
   SignUpController({required this.authUseCase});
@@ -19,25 +20,25 @@ class SignUpController extends GetxController with StateMixin<SignUpController> 
 
   @override
   void onInit() {
-    change(this, status: RxStatus.success());
     super.onInit();
   }
 
   register() async {
     try{
-      change(this, status: RxStatus.loading());
       if(email.text.isEmail && password.text == confirmPassword.text){
+        BotToast.showLoading();
         await authUseCase.register(userAuth: UserAuth(
             username: userName.text,
             password: password.text,
             email: email.text
         ));
+        BotToast.closeAllLoading();
         Get.offAllNamed(Routes.DASH_BOARD);
-        change(this, status: RxStatus.success());
       }
     } catch(e){
       log(e.toString());
-      change(this, status: RxStatus.success());
+      BotToast.showText(text: 'An error occurred');
+      BotToast.closeAllLoading();
     }
   }
 

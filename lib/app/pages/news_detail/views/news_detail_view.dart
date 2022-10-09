@@ -1,9 +1,15 @@
+import 'package:better_player/better_player.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:get/get.dart';
 import 'package:magic_sign/app/utils/date_time.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../gen/assets.gen.dart';
+import '../../text_to_sign/controllers/text_to_sign_controller.dart';
 import '../controllers/news_detail_controller.dart';
 
 class NewsDetailView extends GetView<NewsDetailController> {
@@ -11,16 +17,121 @@ class NewsDetailView extends GetView<NewsDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
-        body: NewsDetail(),
+        body: Column(
+          children: [
+            Expanded(child: NewsDetail()),
+            // Container(
+            //   margin: const EdgeInsets.all(20),
+            //   width: Get.width,
+            //   child: Row(
+            //     children: [
+            //       Expanded(child: TextField(
+            //         maxLines: 2,
+            //         minLines: 2,
+            //         decoration: InputDecoration(
+            //           border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(18.0),
+            //             borderSide:
+            //             const BorderSide(width: 3, color: Colors.black),
+            //           ),
+            //         ),
+            //       ),),
+            //       IconButton(onPressed: (){
+            //
+            //       }, icon: Icon(Icons.swap_horizontal_circle_outlined))
+            //     ],
+            //   ),
+            // ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _openCustomDialog();
+          },
+          child: Image.asset(Assets.image.icSign.path),
+        ),
       ),
     );
+  }
+
+  void _openCustomDialog() {
+    showGeneralDialog(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0)),
+                title: const Text('Translate'),
+                content: TextField(
+                  controller: Get.find<NewsDetailController>().txtController,
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                    // suffixIcon: IconButton(
+                    //     onPressed: () async {
+                    //       // await controller.startRecognizingWithUi();
+                    //     },
+                    //     icon: const Icon(Icons.mic)),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      borderSide:
+                          const BorderSide(width: 3, color: Colors.black),
+                    ),
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text('Cancel')),
+                  TextButton(onPressed: () async  {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    await Get.find<NewsDetailController>().getSignVideo();
+                    if(Get.find<NewsDetailController>().getVideoStatus.isSuccess){
+                      _showDialog();
+                    }
+                  }, child: const Text('Translate'))
+                ],
+              ),
+            ),
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: Get.context!,
+        pageBuilder: (context, animation1, animation2) {
+          return const SizedBox();
+        });
+  }
+
+  _showDialog(){
+    showGeneralDialog(
+      context: Get.context!,
+      barrierColor: Colors.black12.withOpacity(0.9), // Background color
+      barrierDismissible: true,
+      barrierLabel: 'Dialog',
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (_, __, ___) {
+        return const Center(
+          child: MemoryPlayerPage(),
+        );
+      },
+    ).then((value) => Get.back());
   }
 }
 
 class NewsDetail extends StatelessWidget {
-  const NewsDetail({Key? key}) : super(key: key);
+  NewsDetail({Key? key}) : super(key: key);
+  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {
+    Factory(() => EagerGestureRecognizer())
+  };
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -98,30 +209,18 @@ class NewsDetail extends StatelessWidget {
                   ),
                 ),
                 const Gap(20),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Text(
-                      Get.find<NewsDetailController>().article?.content ?? '',
-                      style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                        Get.find<NewsDetailController>().article?.url ?? '',
-                        style: const TextStyle(
-                            color: Colors.blue,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16)),
-                  ),
-                ),
-                const Gap(100)
               ]),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 500,
+                child: WebView(
+                  initialUrl:
+                      Get.find<NewsDetailController>().article?.url ?? '',
+                  javascriptMode: JavascriptMode.unrestricted,
+                  gestureRecognizers: gestureRecognizers,
+                ),
+              ),
             )
           ],
         ),
@@ -217,4 +316,46 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
+}
+
+class MemoryPlayerPage extends StatefulWidget {
+  const MemoryPlayerPage({Key? key}) : super(key: key);
+
+  @override
+  _MemoryPlayerPageState createState() => _MemoryPlayerPageState();
+}
+
+class _MemoryPlayerPageState extends State<MemoryPlayerPage> {
+  late BetterPlayerController _betterPlayerController;
+  @override
+  void initState() {
+    BetterPlayerConfiguration betterPlayerConfiguration =
+    const BetterPlayerConfiguration(
+      aspectRatio: 16 / 9,
+      fit: BoxFit.contain,
+    );
+    _betterPlayerController = BetterPlayerController(betterPlayerConfiguration);
+    _setupDataSource();
+    super.initState();
+  }
+
+  void _setupDataSource() async {
+    List<int> bytes = Get.find<NewsDetailController>().bytes.value;
+    BetterPlayerDataSource dataSource =
+    BetterPlayerDataSource.memory(bytes, videoExtension: "mp4");
+    _betterPlayerController.setupDataSource(dataSource);
+    // BetterPlayerDataSource dataSource = BetterPlayerDataSource.network(
+    //     'https://res.cloudinary.com/h3gg/video/upload/v1665173896/appsup-2022/basketball_slxptx.mp4');
+    // _betterPlayerController.setupDataSource(dataSource);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: BetterPlayer(controller: _betterPlayerController),
+      ),
+    );
+  }
 }

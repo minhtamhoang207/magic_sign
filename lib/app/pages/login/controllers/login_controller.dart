@@ -1,15 +1,15 @@
 import 'dart:developer';
-
 import 'package:agconnect_auth/agconnect_auth.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
+import 'package:huawei_account/huawei_account.dart';
+import 'package:magic_sign/data/data_source/local/local_storage.dart';
 import '../../../../data/models/user_sign_up.dart';
 import '../../../../domain/usecases/auth_usecase.dart';
 import '../../../routes/app_pages.dart';
 
-class LoginController extends GetxController with StateMixin<LoginController> {
-
+class LoginController extends GetxController {
   AuthUseCase authUseCase;
   LoginController({required this.authUseCase});
 
@@ -18,65 +18,60 @@ class LoginController extends GetxController with StateMixin<LoginController> {
 
   @override
   void onInit() {
-    change(this, status: RxStatus.success());
     super.onInit();
   }
 
-  huaweiLogin() async {
+  huaweiSignInAnonymously() async {
     try {
+      BotToast.showLoading();
       SignInResult signInResult = await AGCAuth.instance.signInAnonymously();
-      print('--------------->>>>>>>>>>');
       TokenResult token = await signInResult.user!.getToken();
-      print('TOKEN ${token.token}');
-      inspect(signInResult.user?.getToken() ?? '');
-      print('--------------->>>>>>>>>');
+      log('TOKEN ${token.token}');
+      LocalStorage().saveToken(token: token.token ?? '');
+      Get.offAllNamed(Routes.DASH_BOARD);
+      BotToast.closeAllLoading();
     } catch (e) {
-      print('-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-      print(e.toString());
-      print('-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+      log(e.toString());
+      BotToast.showText(text: e.toString());
+      BotToast.closeAllLoading();
     }
-    //     .then((signInResult){
-    //   print('huhu');
-    //   AGCUser? user = signInResult.user;
-    //     print('--------------->>>>>>>>>>');
-    //   print(user.toString());
-    //     print('--------------->>>>>>>>>');
-    // })
-    //     .catchError((error){
-    //   print('-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-    //   print(error.toString());
-    //   print('-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-    // });
-    // try {
-    //   AccountAuthParamsHelper paramsHelper = AccountAuthParamsHelper()..setProfile()..setAccessToken();
-    // final AccountAuthService authService = AccountAuthManager.getService(paramsHelper.createParams());
-    // AuthAccount account = await authService.signIn();
-    //   print('--------------->>>>>>>>>>');
-    // print(account.toMap().toString());
-    //   print('--------------->>>>>>>>>');
-    // } catch (e){
-    //   print('aaaaaaaaaaaaaa');
-    //   print(e.toString());
-    //   print('aaaaaaaaaaaaaa');
-    //
-    // }
   }
 
+  loginWithHuaweiID() async {
+    try {
+      AccountAuthParamsHelper paramsHelper = AccountAuthParamsHelper()
+        ..setProfile()
+        ..setAccessToken();
+      final AccountAuthService authService =
+          AccountAuthManager.getService(paramsHelper.createParams());
+      AuthAccount account = await authService.signIn();
+      print('--------------->>>>>>>>>>');
+      print(account.toMap().toString());
+      print('--------------->>>>>>>>>');
+    } catch (e) {
+      print('aaaaaaaaaaaaaa');
+      print(e.toString());
+      print('aaaaaaaaaaaaaa');
+    }
+  }
 
   login() async {
-    try{
-      if(userName.text.isNotEmpty && password.text.isNotEmpty){
-        change(this, status: RxStatus.loading());
-        await authUseCase.login(userAuth: UserAuth(
-            username: userName.text,
-            password: password.text,
+    try {
+      if (userName.text.isNotEmpty && password.text.isNotEmpty) {
+        BotToast.showLoading();
+        final response = await authUseCase.login(
+            userAuth: UserAuth(
+          username: userName.text,
+          password: password.text,
         ));
+        LocalStorage().saveToken(token: response.data['accessToken']);
         Get.offAllNamed(Routes.DASH_BOARD);
-        change(this, status: RxStatus.success());
+        BotToast.closeAllLoading();
       }
-    } catch(e){
+    } catch (e) {
       log(e.toString());
-      change(this, status: RxStatus.success());
+      BotToast.showText(text: 'An error occurred');
+      BotToast.closeAllLoading();
     }
   }
 

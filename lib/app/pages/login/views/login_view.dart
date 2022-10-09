@@ -130,54 +130,29 @@ class _LoginScreenState extends State<LoginScreen>
                 IntrinsicWidth(
                   child: Column(
                     children: [
-                      controller.obx((state) {
-                        return InkWell(
-                          onTap: () => controller.login(),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 20),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                gradient: const LinearGradient(colors: [
-                                  Color(0xFF4E65FF),
-                                  Color(0xFF5BBBE1),
-                                ])),
-                            child: const Center(
-                              child: Text("LOGIN",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16)),
-                            ),
-                          ),
-                        );
-                      }, onLoading: const CircularProgressIndicator()),
-                      Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 60),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 30,
-                                height: 1,
-                                color: Colors.black,
-                              ),
-                              const Gap(5),
-                              const Text("OR",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16)),
-                              const Gap(5),
-                              Container(
-                                width: 30,
-                                height: 1,
-                                color: Colors.black,
-                              ),
-                            ],
-                          )),
                       InkWell(
-                        onTap: () async =>
-                            Get.find<LoginController>().huaweiLogin(),
+                        onTap: () async => await controller.login(),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: const LinearGradient(colors: [
+                                Color(0xFF4E65FF),
+                                Color(0xFF5BBBE1),
+                              ])),
+                          child: const Center(
+                            child: Text("LOGIN",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16)),
+                          ),
+                        ),
+                      ),
+                      const Gap(20),
+                      InkWell(
+                        onTap: () async => controller.loginWithHuaweiID(),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 20),
@@ -196,6 +171,25 @@ class _LoginScreenState extends State<LoginScreen>
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16))
                             ],
+                          ),
+                        ),
+                      ),
+                      const Gap(20),
+                      InkWell(
+                        onTap: () async => await controller.huaweiSignInAnonymously(),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey
+                          ),
+                          child: const Center(
+                            child: Text("Login as Guest",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16)),
                           ),
                         ),
                       ),

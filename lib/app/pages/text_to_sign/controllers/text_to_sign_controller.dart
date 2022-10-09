@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:huawei_ml_language/huawei_ml_language.dart';
 import 'package:magic_sign/domain/usecases/sign_language_usecase.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class TextToSignController extends GetxController with StateMixin<TextToSignController>{
 
@@ -22,13 +23,15 @@ class TextToSignController extends GetxController with StateMixin<TextToSignCont
   );
 
   @override
-  void onInit() {
+  void onInit() async {
     change(this, status: RxStatus.empty());
     super.onInit();
   }
 
   startRecognizingWithUi() async {
-    txtController.text = await recognizer.startRecognizingWithUi(setting)??'';
+    if (await Permission.microphone.request().isGranted) {
+      txtController.text = await recognizer.startRecognizingWithUi(setting)??'';
+    }
   }
 
   getSignVideo() async {

@@ -9,6 +9,7 @@ import 'package:magic_sign/data/models/news.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../routes/app_pages.dart';
 import '../../../utils/date_time.dart';
+import '../../learning/controllers/learning_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -160,6 +161,13 @@ Widget _feature(int index) {
     onTap: (){
       if(index == 0){
         Get.toNamed(Routes.TEXT_TO_SIGN);
+      } else if(index == 1){
+        Get.find<DashBoardController>().setIndex(index: 2);
+      } else if(index == 2){
+        Get.find<LearningController>().onInit();
+        Get.find<DashBoardController>().setIndex(index: 3);
+      } else if(index == 3){
+        Get.find<DashBoardController>().setIndex(index: 1);
       }
     },
     child: Container(
@@ -188,22 +196,25 @@ Widget _feature(int index) {
                   ),
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage(Assets.image.imgFeature.path))),
+                      image: AssetImage(controller.listFeatureImg[index]))),
             ),
           ),
           Expanded(
             flex: 1,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-              child: AutoSizeText(controller.listFeature[index],
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  minFontSize: 12,
-                  maxFontSize: 14,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: Colors.black87)),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: AutoSizeText(controller.listFeature[index],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    minFontSize: 12,
+                    maxFontSize: 14,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: Colors.black87)),
+              ),
             ),
           ),
           const Gap(8)

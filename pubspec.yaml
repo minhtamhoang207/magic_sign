@@ -31,8 +31,14 @@ dependencies:
   freezed_annotation:
   json_annotation:
   auto_size_text:
+  lottie:
+  permission_handler:
+  bot_toast:
+  shared_preferences:
+  webview_flutter:
 
-  flutter: 
+
+  flutter:
     sdk: flutter
   get_cli: ^1.7.1
 

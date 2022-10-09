@@ -4,8 +4,9 @@
    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
    <uses-permission android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA"/>
    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+   <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <application
-        android:label="magic_sign"
+        android:label="Magic Sign"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
