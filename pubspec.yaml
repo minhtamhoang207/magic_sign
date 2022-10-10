@@ -36,7 +36,7 @@ dependencies:
   bot_toast:
   shared_preferences:
   webview_flutter:
-
+  pretty_dio_logger:
 
   flutter:
     sdk: flutter

@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:magic_sign/core/utils/constants.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'sign_language_service.g.dart';
 
 @RestApi(
-    baseUrl: 'https://5f9e-2405-4802-134-1740-a913-fe77-8d80-e6e.ap.ngrok.io/api/v1'
+    baseUrl: kSignLanguageURL
 )
 abstract class SignLanguageService {
   factory SignLanguageService(Dio dio, {String baseUrl}) = _SignLanguageService;

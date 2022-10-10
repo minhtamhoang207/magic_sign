@@ -1,9 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magic_sign/di/di.dart';
+import 'package:magic_sign/di.dart';
 
-import 'app/routes/app_pages.dart';
+import 'config/routes/app_pages.dart';
 
 
 void main() async {

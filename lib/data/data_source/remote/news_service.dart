@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:magic_sign/core/utils/constants.dart';
 
 import '../../models/news.dart';
 
@@ -8,10 +9,9 @@ class NewsService {
 
   Future<News> getListNews(String topic) async {
     final response = await dio.get(
-        'https://appups-avep4az4yq-de.a.run.app/api/v1/news',
+        '$kNewsURL/news',
         queryParameters: {'q': topic}
     );
-    print(response.data[0].runtimeType);
     return News.fromJson(response.data[0]);
   }
 }
