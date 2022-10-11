@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:magic_sign/core/helpers/exception.dart';
 
 import '../../../../data/models/user_sign_up.dart';
 import '../../../../domain/usecases/auth_usecase.dart';
@@ -35,9 +37,14 @@ class SignUpController extends GetxController {
         BotToast.closeAllLoading();
         Get.offAllNamed(Routes.DASH_BOARD);
       }
-    } catch(e){
-      log(e.toString());
-      BotToast.showText(text: 'An error occurred');
+    } on ErrorEntity catch (e){
+      BotToast.showSimpleNotification(
+        title: e.message,
+        titleStyle: const TextStyle(
+          color: Colors.white
+        ),
+        backgroundColor: Colors.red
+      );
       BotToast.closeAllLoading();
     }
   }

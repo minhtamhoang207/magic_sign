@@ -4,6 +4,8 @@ import 'package:magic_sign/core/utils/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'exception.dart';
+
 class RestClient {
   Dio init() {
     final dio = Dio()..options = BaseOptions(baseUrl: kBaseURL);
@@ -34,7 +36,6 @@ class AppInterceptors implements Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    // print(err.response?.data['message']??'');
     handler.next(err);
   }
 

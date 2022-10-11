@@ -37,6 +37,7 @@ dependencies:
   shared_preferences:
   webview_flutter:
   pretty_dio_logger:
+  extended_image:
 
   flutter:
     sdk: flutter

@@ -4,6 +4,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:huawei_account/huawei_account.dart';
+import 'package:magic_sign/core/helpers/exception.dart';
+import 'package:magic_sign/core/utils/focus.dart';
 import 'package:magic_sign/data/data_source/local/local_storage.dart';
 import '../../../../data/models/user_sign_up.dart';
 import '../../../../domain/usecases/auth_usecase.dart';
@@ -55,9 +57,10 @@ class LoginController extends GetxController {
     }
   }
 
-  login() async {
+  Future<void> login() async {
     try {
       if (userName.text.isNotEmpty && password.text.isNotEmpty) {
+        AppFocus.unFocus();
         BotToast.showLoading();
         final response = await authUseCase.login(
             userAuth: UserAuth(
@@ -68,9 +71,9 @@ class LoginController extends GetxController {
         Get.offAllNamed(Routes.DASH_BOARD);
         BotToast.closeAllLoading();
       }
-    } catch (e) {
+    } on ErrorEntity catch (e) {
       log(e.toString());
-      BotToast.showText(text: 'An error occurred');
+      BotToast.showText(text: e.message);
       BotToast.closeAllLoading();
     }
   }
